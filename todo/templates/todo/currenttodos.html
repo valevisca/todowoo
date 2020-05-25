@@ -1,0 +1,19 @@
+{% extends 'todo/base.html' %}
+
+{% block content %}
+
+<h1>Current Todos</h1>
+
+<ul>
+    {% for todo in todos %}
+        <!-- We check if todo is important by putting an if block around <b>  -->
+        <li><a href="{% url 'viewtodo' todo.id %}">{% if todo.important %} <b>{% endif %} 
+            {{ todo.title }}    
+            {% if todo.important %} </b>{% endif %}</a> 
+            <!-- We now check if there is a note in the Todo -->
+            {% if todo.memo %} - {{ todo.memo }} {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

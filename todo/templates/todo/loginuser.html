@@ -1,0 +1,21 @@
+{% extends 'todo/base.html' %}
+
+{% block content %}
+
+<h1>User Login</h1>
+
+<h2> {{ error }} </h2>
+
+<!-- We wrap the form.as_p form into a form tag and we specify the method
+as POST -->
+<form method="POST">
+    {% csrf_token %}
+    <!-- This was the original way to call the UserCreationForm 
+    {{ form }}
+    but we can improve a little bit the layout by using the 'as_p'
+    method, which is basicaly formatting 'as paragraph' -->
+    {{ form.as_p }}
+<button type="submit">Login</button>
+</form>
+
+{% endblock %}
