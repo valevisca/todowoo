@@ -7,8 +7,9 @@ class Todo(models.Model):
     memo = models.TextField(blank=True)
     datecreated = models.DateTimeField(auto_now_add=True)
     datedue = models.DateField(null=True, blank=True)
-    datecompleted = models.DateField(null=True, blank=True)
+    datecompleted = models.DateTimeField(null=True, blank=True)
     important = models.BooleanField(default=False)
+    completed = models.BooleanField(default=False)
     # We have to put here a reference to the user. To do this, we have to use 
     # a ForeignKey which allows us to conenct a model to another.
     # This is a "one to many relationship", as one user can have many 

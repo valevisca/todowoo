@@ -5,8 +5,10 @@
 {{ error }}
 
 {{ todo.title }}
-{{ todo.id }}
-<h5>{{ todo.datecreated}}</h5>
+<h5>Created on: {{ todo.datecreated}}</h5>
+<!-- The following is never shown the way the code is written; it's a placeholder -->
+{% if todo.completed %}<h5>Completed on: {{ todo.datecompleted}}</h5>{% endif %}
+
 <!-- The form got defined in views.py, as 'TodoForm' -->
 <form method="POST">
     {% csrf_token %}

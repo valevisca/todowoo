@@ -9,6 +9,7 @@ from django.contrib.auth import login, logout, authenticate
 from .forms import TodoForm
 from .models import Todo
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -78,6 +79,9 @@ def loginuser(request):
             login(request, user)
             return redirect('currenttodos')
 
+# '@login_required' tells Django that only users who have looged in can run the next
+# function
+@login_required
 def logoutuser(request):
     # SE-NOTE: it is really important to check if this is coming as a 'POST'
     # request. If 'logoutuser' comes as a 'GET' request, browsers like Chrome
@@ -93,6 +97,8 @@ def logoutuser(request):
         return redirect('home')
 
 
+
+@login_required
 def createtodo(request):
     if request.method == 'GET':
         # if the method is 'GET', we then go to the loginuser form
@@ -116,15 +122,31 @@ def createtodo(request):
                             'form': TodoForm(),
                             'error': 'Bad Input Data. Please try again.'})
 
+@login_required
 def currenttodos(request):
     """
     Import the Todos from the Db, using the Todo object (see import section)
     NOTE: todos = Todo.objects.all() gets all the todos for every user. We need
     to be more specific than this.
     """
-    todos = Todo.objects.filter(user=request.user, datecompleted__isnull=True)
+    #todos = Todo.objects.filter(user=request.user, datecompleted__isnull=True)
+    todos = Todo.objects.filter(user=request.user, completed=False)
     return render(request, 'todo/currenttodos.html', {'todos':todos})
 
+
+@login_required
+def completedtodos(request):
+    """
+    Import the Todos from the Db, using the Todo object (see import section)
+    NOTE: todos = Todo.objects.all() gets all the todos for every user. We need
+    to be more specific than this.
+    """
+    #todos = Todo.objects.filter(user=request.user, datecompleted__isnull=True)
+    todos = Todo.objects.filter(user=request.user, completed=True).order_by('-datecompleted')
+    return render(request, 'todo/completedtodos.html', {'todos':todos})
+
+
+@login_required
 def viewtodo(request, todo_pk):
     # We use the 'get_object_or_404' method we imported to retrieve from the model
     # 'Todo' the instance wiht 'pk' (primary key in Db terminology) equal to the
@@ -156,6 +178,7 @@ def viewtodo(request, todo_pk):
 
 
 
+@login_required
 def completetodo(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     # This has to be triggered by a 'POST' request ONLY!
@@ -163,10 +186,11 @@ def completetodo(request, todo_pk):
         # To mark the todo is complete we set the time in 'datecompleted'
         # Of course we need to import timezone
         todo.datecompleted = timezone.now()
+        todo.completed = True
         todo.save()
         return redirect('currenttodos')
 
-
+@login_required
 def deletetodo(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     # This has to be triggered by a 'POST' request ONLY!
