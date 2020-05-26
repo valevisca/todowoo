@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^d2mqxv62p330=$qvsegm1-$+cj2lj$0y_e6$kso+8kf=w-*7-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['18.156.3.161']
+ALLOWED_HOSTS = ['pippo99080.pythonanywhere.com']
 
 
 # Application definition
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'todo',
 ]
 
@@ -120,13 +120,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-LOGIN_URL = '/login/'
+# We define MEDIA_URL
+MEDIA_URL = '/media/'
 
-"""
-try: 
-    from .local_settings import *
-except ImportError:
-    print("It looks like there is no local_settings.py file. You \
-            must be on production")
-"""
+# Always use os.path so to write OS agnostic code (the path changes
+# depending if you are on POSIX or Windows systems)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
