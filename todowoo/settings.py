@@ -25,7 +25,7 @@ SECRET_KEY = '^d2mqxv62p330=$qvsegm1-$+cj2lj$0y_e6$kso+8kf=w-*7-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['pippo99080.pythonanywhere.com']
+ALLOWED_HOSTS = ['18.156.3.161']
 
 
 # Application definition
