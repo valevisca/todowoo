@@ -129,6 +129,8 @@ MEDIA_URL = '/media/'
 # depending if you are on POSIX or Windows systems)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+LOGIN_URL = '/login/'
+
 try: 
     from .local_settings import *
 except ImportError:
